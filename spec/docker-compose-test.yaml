@@ -1,0 +1,11 @@
+---
+version: '2'
+
+services:
+  render:
+    image: mide/minecraft-overviewer:latest
+    environment:
+      - MINECRAFT_VERSION=1.15.2
+    volumes:
+      # TODO: Figure out non-absolute path here
+      - ./test-data:/home/minecraft/server:ro

@@ -9,16 +9,18 @@ test-dive:
 		wagoodman/dive:latest "mide/minecraft-overviewer:latest"
 
 test-render:
-	git clone https://github.com/overviewer/Overviewer-Test-Data.git test-data/
-	mv test-data/world_189/ test-data/world
+	@make build
+	# TODO get test-data into this directory.
+	rm -rvf test-data-output/
 	docker run --rm -it \
-		-e MINECRAFT_VERSION="1.14.1" \
+		-e MINECRAFT_VERSION="1.15.2" \
 		-v "$(shell pwd)/test-data:/home/minecraft/server/:ro" \
 		-v "$(shell pwd)/test-data-output:/home/minecraft/render/:rw" \
 		mide/minecraft-overviewer:latest
 
-clean:
-	rm -rvf test-data/ test-data-output/
+test-image:
+	@make build
+	bundle exec rspec
 
 lint:
 	docker pull github/super-linter
